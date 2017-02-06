@@ -18,12 +18,6 @@ import {
 
 
 export default class CheckBox extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isChecked: this.props.isChecked,
-        }
-    }
 
     static propTypes = {
         ...View.propTypes,
@@ -36,7 +30,7 @@ export default class CheckBox extends Component {
         checkedImage: React.PropTypes.element,
         unCheckedImage: React.PropTypes.element,
         onClick: React.PropTypes.func.isRequired,
-        isChecked: React.PropTypes.bool
+        isChecked: React.PropTypes.bool.isRequred
 
     }
     static defaultProps = {
@@ -61,7 +55,7 @@ export default class CheckBox extends Component {
     }
 
     _renderImage() {
-        if (this.state.isChecked) {
+        if (this.props.isChecked) {
             return this.props.checkedImage ? this.props.checkedImage : this.genCheckedImage();
         } else {
             return this.props.unCheckedImage ? this.props.unCheckedImage : this.genCheckedImage();
@@ -69,25 +63,18 @@ export default class CheckBox extends Component {
     }
 
     genCheckedImage() {
-        var source = this.state.isChecked ? require('./img/ic_check_box.png') : require('./img/ic_check_box_outline_blank.png');
+        var source = this.props.isChecked ? require('./img/ic_check_box.png') : require('./img/ic_check_box_outline_blank.png');
 
         return (
             <Image source={source}/>
         )
     }
 
-    onClick() {
-        this.setState({
-            isChecked: !this.state.isChecked
-        })
-        this.props.onClick();
-    }
-
     render() {
         return (
             <TouchableHighlight
                 style={this.props.style}
-                onPress={()=>this.onClick()}
+                onPress={()=>this.props.onClick()}
                 underlayColor='transparent'
             >
                 <View style={styles.container}>
